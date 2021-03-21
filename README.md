@@ -1,5 +1,5 @@
 # snake-game-cpp
-A Snake Game written in C++
+A terminal based Snake Game written in C++
 
 (Currently only works on Windows)
 
