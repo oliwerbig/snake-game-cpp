@@ -1,18 +1,32 @@
 #pragma once
 #include "Direction.h"
-class Snake;
-class Board;
+class Screen;
+class Controller;
 class Cell;
+class Board;
+class Snake;
 class Game
 {
-private:
-	Snake* snake;
+protected:
+	Screen* screen;
+	Controller* controller;
 	Board* board;
-	Direction direction = Direction::NONE;
+	Snake* snake;
 	bool gameOver = false;
-	Cell* getNextCell(Cell* currentCell);
+	Direction direction = Direction::NONE;
+	int score = 0;
 public:
-	Game(Snake* snake, Board* board);
+	Game(Screen* screen, Controller* controller, Board* board, Snake* snake);
+
+	void update();
+	void placeBorders();
+	void placeSnake();
+	void placeNewFood();
+	void checkForNewDirection();
+	Cell* getNextCell();
+
+	Screen* getScreen() { return screen; }
+	void setScreen(Screen* screen) { this->screen = screen; }
 	Snake* getSnake() { return snake; }
 	void setSnake(Snake* snake) { this->snake = snake; }
 	Board* getBoard() { return board; }
@@ -21,8 +35,7 @@ public:
 	void setGameOver(bool gameOver) { this->gameOver = gameOver; }
 	Direction getDirection() { return direction; }
 	void setDirection(Direction direction) { this->direction = direction; }
-	void update();
-	void placeFood();
-	void placeSnake();
+	int getScore() { return score; }
+	void setScore(int score) { this->score = score; }
 };
 

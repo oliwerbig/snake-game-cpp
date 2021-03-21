@@ -1,21 +1,117 @@
 #include "Game.h"
+#include "Screen.h"
+#include "Controller.h"
 #include "Board.h"
 #include "Snake.h"
 #include "Cell.h"
-#include "CellType.h"
-#include "Direction.h"
 
-Game::Game(Snake* snake, Board* board)
+#include <random>
+#include <chrono>
+#include <thread>
+
+Game::Game(Screen* screen, Controller* controller, Board* board, Snake* snake)
 {
-	this->snake = snake;
 	this->board = board;
-	placeFood();
+	this->snake = snake;
+	this->screen = screen;
+	this->controller = controller;
+	placeBorders();
+	placeSnake();
+	placeNewFood();
 }
 
-Cell* Game::getNextCell(Cell* currentCell)
+void Game::update()
 {
-	int row = currentCell->getRow();
-	int column = currentCell->getColumn();
+	checkForNewDirection();
+	Cell* nextCell = getNextCell();
+
+	placeSnake();
+
+	if (snake->willCollide(nextCell))
+	{
+		setDirection(Direction::NONE);
+		gameOver = true;
+	}
+	else
+	{
+		if (nextCell->getCellType() == CellType::FOOD) {
+			score++;
+			snake->grow(nextCell);
+			placeNewFood();
+		}
+		else
+		{
+			snake->move(nextCell);
+		}
+	}
+
+	screen->renderBoard(board);
+
+	switch (direction)
+	{
+	case Direction::NONE:
+		break;
+	case Direction::RIGHT:
+	case Direction::LEFT:
+		std::this_thread::sleep_for(std::chrono::milliseconds(40));
+		break;
+	case Direction::UP:
+	case Direction::DOWN:
+		std::this_thread::sleep_for(std::chrono::milliseconds(80));
+		break;
+	default:
+		break;
+	}
+	
+}
+
+void Game::placeBorders()
+{
+	for (int i = 0; i < board->getNumOfColumns(); i++)
+	{
+		board->getCell(0, i)->setCellType(CellType::BORDER);
+	}
+
+	for (int i = 0; i < board->getNumOfRows(); i++)
+	{
+		board->getCell(i, 0)->setCellType(CellType::BORDER);
+		board->getCell(i, board->getNumOfColumns()-1)->setCellType(CellType::BORDER);
+	}
+
+	for (int i = 0; i < board->getNumOfColumns(); i++)
+	{
+		board->getCell(board->getNumOfRows()-1, i)->setCellType(CellType::BORDER);
+	}
+}
+
+void Game::placeSnake()
+{
+	for (Cell* cell : snake->getCells())
+	{
+		board->getCell(cell->getRow(), cell->getColumn())->setCellType(cell->getCellType());
+	}
+}
+
+void Game::placeNewFood()
+{
+	std::random_device rd;
+	std::mt19937 mt(rd());
+	std::uniform_real_distribution<double> rowDist(0, board->getNumOfRows());
+	std::uniform_real_distribution<double> columnDist(0, board->getNumOfColumns());
+	int row = (int)rowDist(rd);
+	int column = (int)columnDist(rd);
+	while (board->getCell(row, column)->getCellType() != CellType::EMPTY)
+	{
+		row = (int)rowDist(rd);
+		column = (int)columnDist(rd);
+	}
+	board->getCell(row, column)->setCellType(CellType::FOOD);
+}
+
+Cell* Game::getNextCell()
+{
+	int row = snake->getHeadCell()->getRow();
+	int column = snake->getHeadCell()->getColumn();
 
 	if (direction == Direction::RIGHT) {
 		column++;
@@ -35,40 +131,28 @@ Cell* Game::getNextCell(Cell* currentCell)
 	return nextCell;
 }
 
-void Game::update()
+void Game::checkForNewDirection()
 {
-	placeSnake();
-	if (!gameOver) {
-		if (direction != Direction::NONE) {
-			Cell* nextCell = getNextCell(snake->getHeadCell());
-
-			if (snake->willCollide(nextCell)) {
-				setDirection(Direction::NONE);
-				gameOver = true;
-			}
-			else {
-				snake->move(nextCell);
-				if (nextCell->getCellType() == CellType::FOOD) {
-					snake->grow();
-					placeFood();
-				}
-			}
-		}
-	}
-}
-
-void Game::placeFood()
-{
-	int row = rand() % board->getNumOfRows();
-	int column = rand() % board->getNumOfColumns();
-	board->getCell(row, column)->setCellType(CellType::FOOD);
-}
-
-void Game::placeSnake()
-{
-	for (Cell* snakeCell : snake->getSnakeCells())
+	Direction newDirection = Direction::NONE;
+	if (controller->isUpPressed())
 	{
-		board->getCell(snakeCell->getRow(), snakeCell->getColumn())->setCellType(CellType::SNAKE_BODY);
+		newDirection = Direction::UP;
 	}
-	board->getCell(snake->getHeadCell()->getRow(), snake->getHeadCell()->getColumn())->setCellType(CellType::SNAKE_HEAD);
+	if (controller->isDownPressed())
+	{
+		newDirection = Direction::DOWN;
+	}
+	if (controller->isLeftPressed())
+	{
+		newDirection = Direction::LEFT;
+	}
+	if (controller->isRightPressed())
+	{
+		newDirection = Direction::RIGHT;
+	}
+
+	if (newDirection != Direction::NONE)
+	{
+		direction = newDirection;
+	}
 }

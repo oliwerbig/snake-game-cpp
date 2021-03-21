@@ -1,19 +1,21 @@
 #pragma once
+#include "Direction.h"
 #include <list>
 class Cell;
 class Snake
 {
 private:
-	std::list<Cell*> snakeCells;
-	Cell* snakeHeadCell;
+	std::list<Cell*> cells;
 public:
-	Snake(Cell* snakeHeadCell);
-	void grow();
+	Snake(Cell* headCell);
+	
+	void grow(Cell* nextCell);
 	void move(Cell* nextCell);
+	
 	bool willCollide(Cell* nextCell);
-	std::list<Cell*> getSnakeCells() { return snakeCells; }
-	void setSnakeCells(std::list<Cell*> snakeCells) { this->snakeCells = snakeCells; }
-	Cell* getHeadCell() { return snakeHeadCell; }
-	void setHeadCell(Cell* snakeHeadCell) { this->snakeHeadCell = snakeHeadCell; }
+	
+	std::list<Cell*> getCells() { return cells; }
+	void setCells(std::list<Cell*> cells) { this->cells = cells; }
+	Cell* getHeadCell() { return cells.front(); }
 };
 

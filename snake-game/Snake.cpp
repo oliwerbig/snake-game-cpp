@@ -2,34 +2,40 @@
 #include "Cell.h"
 #include "CellType.h"
 
-Snake::Snake(Cell* initialSnakeHeadCell)
+Snake::Snake(Cell* headCell)
 {
-	snakeHeadCell = initialSnakeHeadCell;
-	snakeCells.push_back(snakeHeadCell);
+	headCell->setCellType(CellType::SNAKE_HEAD);
+	cells.push_front(headCell);
 }
 
-void Snake::grow()
+void Snake::grow(Cell* nextCell)
 {
-	snakeCells.push_back(snakeHeadCell);
+	getHeadCell()->setCellType(CellType::SNAKE_BODY);
+	nextCell->setCellType(CellType::SNAKE_HEAD);
+	cells.push_front(nextCell);
 }
 
 void Snake::move(Cell* nextCell)
 {
-	Cell* tailCell = snakeCells.back();
-	snakeCells.pop_back();
-	tailCell->setCellType(CellType::EMPTY);
-	snakeHeadCell = nextCell;
-	snakeCells.push_front(snakeHeadCell);
+	if (nextCell != getHeadCell())
+	{
+		getHeadCell()->setCellType(CellType::SNAKE_BODY);
+		nextCell->setCellType(CellType::SNAKE_HEAD);
+		cells.push_front(nextCell);
+		cells.back()->setCellType(CellType::EMPTY);
+		cells.pop_back();
+	}
 }
 
 bool Snake::willCollide(Cell* nextCell)
 {
-	for (Cell* cell : snakeCells)
+	if (nextCell->getCellType() == CellType::BORDER)
 	{
-		if (cell == nextCell)
-		{
-			return true;
-		}
+		return true;
+	}
+	else if (nextCell->getCellType() == CellType::SNAKE_BODY)
+	{
+		return true;
 	}
 
 	return false;

@@ -141,17 +141,28 @@
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Cell.cpp" />
+    <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="WinKeyboardController.cpp" />
+    <ClCompile Include="Screen.cpp" />
     <ClCompile Include="snake-game.cpp" />
     <ClCompile Include="Snake.cpp" />
+    <ClCompile Include="WinTerminalScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
     <ClInclude Include="Cell.h" />
     <ClInclude Include="CellType.h" />
+    <ClInclude Include="Controller.h" />
     <ClInclude Include="Direction.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="WinKeyboardController.h" />
+    <ClInclude Include="Screen.h" />
     <ClInclude Include="Snake.h" />
+    <ClInclude Include="WinTerminalScreen.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

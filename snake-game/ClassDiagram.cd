@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Board">
+    <Position X="10" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABCAAAAAAAAAAAAAAAAAECAAAAAAAAAAAAACAAQAA=</HashCode>
+      <FileName>Board.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cell">
+    <Position X="4.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAkAAAAAAAABAAAACSAAgAAAAAAAAAACAAIA=</HashCode>
+      <FileName>Cell.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Controller">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABCAAgAAAIAAAAEAAIIAAIAAQAACAAAAAAAA=</HashCode>
+      <FileName>Controller.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Game">
+    <Position X="6.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgCAJAgAAAAAIAEAIAAKAAWAAAgASICBLAAAQAAEAIA=</HashCode>
+      <FileName>Game.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Screen">
+    <Position X="1.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAACAAAABAIAAAAAAAAAQBAAAAAAAAAQAAA=</HashCode>
+      <FileName>Screen.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Snake">
+    <Position X="8.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAQCIgAAAAAACAAAIAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Snake.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WinKeyboardController">
+    <Position X="3" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAgAAAAAAAAAAAAIAAIAAQAACAAAAAAAA=</HashCode>
+      <FileName>WinKeyboardController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WinTerminalScreen">
+    <Position X="1.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAgAACAEQAQAIAAAAgAAAAQBAAEAAAAAAQAAA=</HashCode>
+      <FileName>WinTerminalScreen.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="CellType">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAIAAAAAACAAAAAAACAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>CellType.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Direction">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAQAAAAAAAAICAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Direction.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

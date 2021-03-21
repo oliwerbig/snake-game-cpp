@@ -8,7 +8,7 @@ Board::Board(int numOfRows, int numOfColumns)
 {
 	this->numOfRows = numOfRows;
 	this->numOfColumns = numOfColumns;
-	
+
 	for (int row = 0; row < numOfRows; row++) {
 		std::vector<Cell> temp;
 		for (int column = 0; column < numOfColumns; column++) {
